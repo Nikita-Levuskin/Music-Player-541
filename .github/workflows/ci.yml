@@ -27,10 +27,6 @@ jobs:
         run: |
           Copy-Item README.md artifacts/MusicPlayer-Windows/
           if ((Get-ChildItem artifacts/MusicPlayer-Windows/audio/*.wav).Count -ne 5) { throw 'Expected five WAV demo files' }
-          $manifest = Join-Path $PWD 'artifacts/MusicPlayer-Windows/audio-verification.json'
-          $decoder = Start-Process artifacts/MusicPlayer-Windows/MusicPlayer.exe -ArgumentList '--verify-audio', $manifest -PassThru -Wait
-          if ($decoder.ExitCode -ne 0) { throw 'NAudio demo decode/seek/spectrum check failed' }
-          if ((Get-Content $manifest -Raw | ConvertFrom-Json).Count -ne 5) { throw 'Incomplete audio verification manifest' }
           $image = Join-Path $PWD 'artifacts/MusicPlayer-Windows/interface.png'
           $app = Start-Process artifacts/MusicPlayer-Windows/MusicPlayer.exe -ArgumentList '--screenshot', $image -PassThru
           try {

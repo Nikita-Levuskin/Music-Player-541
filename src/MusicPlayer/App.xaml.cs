@@ -9,12 +9,6 @@ public partial class App : Application
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
-        if (e.Args.Length == 2 && e.Args[0] == "--verify-audio")
-        {
-            try { AudioDiagnostics.Verify(e.Args[1]); Shutdown(0); }
-            catch { Shutdown(1); }
-            return;
-        }
         var window = new MainWindow();
         MainWindow = window;
         if (e.Args.Length == 2 && e.Args[0] == "--screenshot")

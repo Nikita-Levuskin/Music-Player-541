@@ -40,13 +40,15 @@ dotnet run --project src/MusicPlayer
 ```sh
 dotnet build src/MusicPlayer -c Release
 dotnet run --project tests/MusicPlayer.Tests -c Release
+dotnet run --project tests/MusicPlayer.DecoderTests -c Release
 dotnet publish src/MusicPlayer -c Release -r win-x64 --self-contained true -o artifacts/windows
 ```
 
-В GitHub Actions ядро проверяется на Linux и Windows. Отдельно собирается
-самостоятельная Windows-версия с пятью WAV-файлами. NAudio декодирует каждый демофайл,
-проверяются перемотка и ненулевой спектр. Затем запускается и сохраняется изображение
-настоящего WPF-окна. Сборку можно скачать из Artifacts.
+В GitHub Actions 14 тестов ядра выполняются на Linux и Windows. Отдельно собирается
+самостоятельная Windows-версия с пятью WAV-файлами, запускается и сохраняется изображение
+настоящего WPF-окна. Сборку можно скачать из Artifacts. Дополнительный набор
+MusicPlayer.DecoderTests проверяет чтение каждого демофайла через NAudio,
+перемотку и ненулевой спектр без звукового устройства.
 
 ## Структура
 
@@ -80,4 +82,5 @@ python3 scripts/generate_demo_audio.py
 - [WPF](https://learn.microsoft.com/dotnet/desktop/wpf/)
 - [DispatcherTimer](https://learn.microsoft.com/dotnet/api/system.windows.threading.dispatchertimer)
 
-Файл отчёта находится в `docs` готового комплекта для сдачи.
+[PDF-отчёт](docs/Левушкин_Никита_541_Музыкальный_плеер.pdf), снимок настоящего WPF-окна
+и результаты декодирования демофайлов находятся в `docs`.

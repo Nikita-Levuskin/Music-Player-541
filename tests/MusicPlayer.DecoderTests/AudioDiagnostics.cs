@@ -3,7 +3,7 @@ using System.Text.Json;
 using MusicPlayer.Core;
 using NAudio.Wave;
 
-namespace MusicPlayer;
+namespace MusicPlayer.DecoderTests;
 
 internal static class AudioDiagnostics
 {
