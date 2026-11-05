@@ -1,0 +1,22 @@
+{
+  "repository": "Music-Player-541",
+  "run_id": 42063683939,
+  "conclusion": "success",
+  "jobs": [
+    {
+      "name": "core-tests (ubuntu-latest)",
+      "conclusion": "success"
+    },
+    {
+      "name": "core-tests (windows-latest)",
+      "conclusion": "success"
+    },
+    {
+      "name": "windows-package",
+      "conclusion": "success"
+    }
+  ],
+  "artifact_id": 13431834901,
+  "sha256": "982d6dc8cf303c1bc22d273322c2f74096e92f7d3ff1de68404b640feea52fc2",
+  "run_url": "https://github.com/Nikita-Levuskin/Music-Player-541/actions/runs/42063683939"
+}

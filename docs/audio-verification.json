@@ -1,0 +1,52 @@
+[
+  {
+    "file": "01 - Утро.wav",
+    "durationSeconds": 18,
+    "channels": 2,
+    "sampleRate": 22050,
+    "decodedSamples": 793800,
+    "pcmPeak": 0.70892334,
+    "spectrumPeak": 0.8230791030724274,
+    "seekVerified": true
+  },
+  {
+    "file": "02 - Движение.wav",
+    "durationSeconds": 18,
+    "channels": 2,
+    "sampleRate": 22050,
+    "decodedSamples": 793800,
+    "pcmPeak": 0.737854,
+    "spectrumPeak": 0.8164540074830371,
+    "seekVerified": true
+  },
+  {
+    "file": "03 - Вечер.wav",
+    "durationSeconds": 18,
+    "channels": 2,
+    "sampleRate": 22050,
+    "decodedSamples": 793800,
+    "pcmPeak": 0.7006836,
+    "spectrumPeak": 0.842120329631411,
+    "seekVerified": true
+  },
+  {
+    "file": "04 - Импульс.wav",
+    "durationSeconds": 18,
+    "channels": 2,
+    "sampleRate": 22050,
+    "decodedSamples": 793800,
+    "pcmPeak": 0.74243164,
+    "spectrumPeak": 0.8054174331933418,
+    "seekVerified": true
+  },
+  {
+    "file": "05 - Пространство.wav",
+    "durationSeconds": 18,
+    "channels": 2,
+    "sampleRate": 22050,
+    "decodedSamples": 793800,
+    "pcmPeak": 0.7168274,
+    "spectrumPeak": 0.8356321742438013,
+    "seekVerified": true
+  }
+]
