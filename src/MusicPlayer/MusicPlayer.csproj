@@ -7,4 +7,5 @@
   </PropertyGroup>
   <ItemGroup><ProjectReference Include="../MusicPlayer.Core/MusicPlayer.Core.csproj" /><PackageReference Include="NAudio" Version="2.2.1" /></ItemGroup>
   <ItemGroup><Content Include="../../audio/*.wav" Link="audio/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" /></ItemGroup>
+  <ItemGroup><Content Include="../../audio/LICENSE.txt" Link="audio/LICENSE.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" /></ItemGroup>
 </Project>

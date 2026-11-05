@@ -45,7 +45,10 @@ public partial class MainWindow : Window
     {
         try
         {
-            player.Stop(); loaded = null; tracks.Clear();
+            player.Unload(); loaded = null; tracks.Clear();
+            dragging = false; updating = true;
+            PositionSlider.Value = 0; PositionSlider.Maximum = 1; updating = false;
+            TrackTitle.Text = "Выберите трек"; CurrentTime.Text = TotalTime.Text = "0:00";
             foreach (var track in PlaylistService.Scan(directory)) tracks.Add(track);
             TrackCount.Text = $"Треков: {tracks.Count}";
             Status.Text = tracks.Count == 0 ? "Папка пуста или недоступна. Откройте каталог с MP3/WAV." : directory;
@@ -94,10 +97,10 @@ public partial class MainWindow : Window
     }
     private void PlayPause(object sender, RoutedEventArgs e)
     {
-        if (player.State == PlaybackState.Playing) { player.Pause(); Status.Text = "Пауза"; }
+        if (player.State == PlaybackState.Playing) RunAudio(() => { player.Pause(); Status.Text = "Пауза"; });
         else LoadSelected(true);
     }
-    private void Stop(object sender, RoutedEventArgs e) { player.Stop(); Status.Text = "Остановлено"; }
+    private void Stop(object sender, RoutedEventArgs e) => RunAudio(() => { player.Stop(); Status.Text = "Остановлено"; });
     private void SelectionChanged(object sender, SelectionChangedEventArgs e)
     { if (IsLoaded && TrackList.SelectedItem is Track) LoadSelected(player.State == PlaybackState.Playing); }
     private void DoubleClick(object sender, MouseButtonEventArgs e) => LoadSelected(true);
@@ -118,17 +121,24 @@ public partial class MainWindow : Window
     }
     private void BeginSeek(object sender, MouseButtonEventArgs e) => dragging = true;
     private void EndSeek(object sender, MouseButtonEventArgs e)
-    { if (dragging) { player.Seek(PositionSlider.Value); dragging = false; } }
+    { if (dragging) { RunAudio(() => player.Seek(PositionSlider.Value)); dragging = false; } }
     private void SeekChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-    { if (!updating && !dragging && player.IsLoaded) player.Seek(e.NewValue); }
+    { if (!updating && !dragging && player.IsLoaded) RunAudio(() => player.Seek(e.NewValue)); }
     private void VolumeChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        player.Volume = e.NewValue;
+        RunAudio(() => player.Volume = e.NewValue);
         if (VolumeLabel is not null) VolumeLabel.Text = $"{(int)(e.NewValue * 100)} %";
     }
     private void ChooseFolder(object sender, RoutedEventArgs e)
     {
         var dialog = new Microsoft.Win32.OpenFolderDialog { Title = "Выберите папку с MP3 или WAV" };
         if (dialog.ShowDialog(this) == true) LoadFolder(dialog.FolderName);
+    }
+    private void RunAudio(Action operation)
+    {
+        try { operation(); }
+        catch (Exception error) when (error is InvalidOperationException or IOException
+            or NAudio.MmException or System.Runtime.InteropServices.COMException)
+        { if (Status is not null) Status.Text = "Ошибка аудиоустройства: " + error.Message; }
     }
 }

@@ -66,6 +66,7 @@ public sealed class AudioPlayer : IDisposable
         reader?.Dispose(); reader = null; Analyzer.Clear();
     }
     public void Dispose() => CloseTrack();
+    public void Unload() => CloseTrack();
 
     private sealed class VisualizationProvider(ISampleProvider source, SpectrumAnalyzer analyzer) : ISampleProvider
     {
