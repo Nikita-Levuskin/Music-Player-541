@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src/MusicPlayer.Core/MusicPlayer.Core.csproj" />
+  <Project Path="src/MusicPlayer/MusicPlayer.csproj" />
+  <Project Path="tests/MusicPlayer.Tests/MusicPlayer.Tests.csproj" />
+</Solution>

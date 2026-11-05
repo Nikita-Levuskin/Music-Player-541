@@ -1,0 +1,43 @@
+name: Build, test and package
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  core-tests:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+      - run: dotnet run --project tests/MusicPlayer.Tests -c Release
+  windows-package:
+    needs: core-tests
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+      - run: dotnet publish src/MusicPlayer -c Release -r win-x64 --self-contained true -o artifacts/MusicPlayer-Windows
+      - shell: pwsh
+        run: |
+          Copy-Item README.md artifacts/MusicPlayer-Windows/
+          if ((Get-ChildItem artifacts/MusicPlayer-Windows/audio/*.wav).Count -ne 5) { throw 'Expected five WAV demo files' }
+          $image = Join-Path $PWD 'artifacts/MusicPlayer-Windows/interface.png'
+          $app = Start-Process artifacts/MusicPlayer-Windows/MusicPlayer.exe -ArgumentList '--screenshot', $image -PassThru
+          try {
+            if (-not $app.WaitForExit(30000)) { throw 'GUI snapshot did not finish' }
+            if ($app.ExitCode -ne 0) { throw "GUI exit code: $($app.ExitCode)" }
+            if (-not (Test-Path $image)) { throw 'GUI screenshot was not created' }
+          } finally {
+            if (-not $app.HasExited) { Stop-Process -Id $app.Id }
+          }
+      - uses: actions/upload-artifact@v7
+        with:
+          name: MusicPlayer-Windows-x64
+          path: artifacts/MusicPlayer-Windows/
+          if-no-files-found: error

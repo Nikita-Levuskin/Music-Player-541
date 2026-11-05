@@ -1,0 +1,18 @@
+<Window x:Class="MusicPlayer.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="Музыкальный плеер" Height="680" Width="980" MinHeight="580" MinWidth="780" Background="#F3F6F8" Foreground="#183547" FontFamily="Segoe UI" FontSize="14">
+ <Grid Margin="28"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+ <StackPanel Margin="0,0,0,24"><TextBlock Text="Левушкин Никита · группа 541" Foreground="#5D7484" FontSize="12"/><TextBlock Text="Музыкальный плеер" FontSize="28" FontWeight="SemiBold"/></StackPanel>
+ <Grid Grid.Row="1"><Grid.ColumnDefinitions><ColumnDefinition Width="280"/><ColumnDefinition Width="24"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+  <DockPanel><StackPanel DockPanel.Dock="Top"><TextBlock Text="Плейлист" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,12"/><Button Content="Открыть папку…" Click="ChooseFolder" Margin="0,0,0,12"/></StackPanel>
+   <ListBox x:Name="TrackList" DisplayMemberPath="DisplayName" SelectionChanged="SelectionChanged" MouseDoubleClick="DoubleClick" BorderBrush="#CAD5DC" Background="White" Padding="8" ScrollViewer.HorizontalScrollBarVisibility="Disabled"><ListBox.ItemContainerStyle><Style TargetType="ListBoxItem"><Setter Property="Padding" Value="8,12"/><Setter Property="HorizontalContentAlignment" Value="Stretch"/></Style></ListBox.ItemContainerStyle></ListBox>
+  </DockPanel>
+  <Grid Grid.Column="2"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+   <StackPanel><TextBlock x:Name="TrackTitle" Text="Выберите трек" FontSize="23" FontWeight="SemiBold" TextWrapping="Wrap"/><TextBlock x:Name="TrackCount" Foreground="#5D7484" Margin="0,6,0,12"/></StackPanel>
+   <Border Grid.Row="1" Background="#132D3A" CornerRadius="10" Padding="16" MinHeight="140" Margin="0,0,0,20"><Grid x:Name="Spectrum" VerticalAlignment="Stretch"/></Border>
+   <StackPanel Grid.Row="2"><Slider x:Name="PositionSlider" Minimum="0" Maximum="1" ValueChanged="SeekChanged" PreviewMouseLeftButtonDown="BeginSeek" PreviewMouseLeftButtonUp="EndSeek" IsMoveToPointEnabled="True"/><DockPanel Margin="0,6,0,16"><TextBlock x:Name="CurrentTime" Text="0:00"/><TextBlock x:Name="TotalTime" Text="0:00" HorizontalAlignment="Right"/></DockPanel></StackPanel>
+   <WrapPanel Grid.Row="3" Margin="0,0,0,20"><Button Content="Предыдущий" Click="Previous"/><Button x:Name="PlayButton" Content="Воспроизвести" Click="PlayPause"/><Button Content="Стоп" Click="Stop"/><Button Content="Следующий" Click="Next"/></WrapPanel>
+   <DockPanel Grid.Row="4"><TextBlock Text="Громкость" VerticalAlignment="Center" Margin="0,0,12,0"/><TextBlock x:Name="VolumeLabel" DockPanel.Dock="Right" Width="44" Text="70 %" VerticalAlignment="Center"/><Slider x:Name="VolumeSlider" Minimum="0" Maximum="1" Value="0.7" ValueChanged="VolumeChanged" VerticalAlignment="Center"/></DockPanel>
+  </Grid>
+ </Grid>
+ <TextBlock Grid.Row="2" x:Name="Status" Text="MP3 и WAV · визуализация реальных аудиосэмплов" Foreground="#5D7484" Margin="0,22,0,0" TextWrapping="Wrap"/>
+ </Grid>
+</Window>
